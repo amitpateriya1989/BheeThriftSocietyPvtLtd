@@ -1,0 +1,5 @@
+INDEX VERSION 1.122+D:\SBI Project\workspace_thrift\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1692941850.index
+1855553174.index
+3902444256.index
+1239806483.index

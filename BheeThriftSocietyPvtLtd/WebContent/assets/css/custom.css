@@ -1,0 +1,44 @@
+/* here you can put your own css to customize and override the theme */
+.userimg-block{
+	height:auto;
+	background-color:#f5f5f5;
+}
+
+.userimg-block, .userimg-block .user-input{	width:100%;}
+.userimg-block .user-pic, .userimg-block .user-pic .uimg{	width:100px; height:100px;}
+
+.userimg-block .user-pic{
+	margin:0px auto;
+}
+
+.userimg-block .user-input{
+	text-align:center;
+}
+
+.userimg-block .user-input span{
+	font-size:14px;
+	font-weight: 600;
+}
+
+#modelLoad
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 9999;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+ #modelLoad .loading1
+    {
+        font-size: 14pt;
+        color:#000;
+        padding:15px;
+        position: fixed;
+        background-color: #FFF;
+        z-index: 99999;
+    }

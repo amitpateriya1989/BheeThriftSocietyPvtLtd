@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fd_maturity_report" language="groovy" pageWidth="612" pageHeight="792" columnWidth="522" leftMargin="54" rightMargin="36" topMargin="36" bottomMargin="36">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="57"/>
+	<parameter name="from" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="to" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     row_number() over() as sno,
+     ad_fd_rediption."ad_fd_rediption_id" AS ad_fd_rediption_id,
+     ad_fd_rediption."payroi" AS payroi,
+     ad_fd_rediption."maturitydate" AS maturitydate,
+     ad_fd_rediption."payint" AS payint,
+     ad_fd_rediption."totalpayamt" AS totalpayamt,
+     ad_fd_rediption."rediptiontype" AS rediptiontype,
+     ad_member."ad_member_id" AS ad_member_id,
+     ad_member."ad_society_no" AS ad_society_no,
+     ad_member."name" AS name,
+     ad_fd_trx."ad_fd_trx_id" AS ad_fd_trx_id,
+     ad_fd_trx."fd_no" AS fd_no,
+     ad_fd_trx."fd_amt" AS fd_amt,
+     ad_fd_trx."opening_date" AS opening_date,
+     ad_fd_trx."ad_fd_roi_id" AS fd_roi_id,
+     ad_fd_trx."maturity_date" AS maturity_date
+FROM
+     "public"."ad_fd_rediption"
+     LEFT JOIN  "public"."ad_member" ad_member  ON ad_fd_rediption."ad_member_id"=ad_member."ad_member_id"
+     LEFT JOIN "public"."ad_fd_trx" ad_fd_trx ON ad_fd_rediption."ad_fd_trx_id" = ad_fd_trx."ad_fd_trx_id"
+WHERE   ad_fd_rediption."maturitydate"  BETWEEN $P{from} AND $P{to}]]>
+	</queryString>
+	<field name="sno" class="java.lang.Long"/>
+	<field name="ad_fd_rediption_id" class="java.lang.Integer"/>
+	<field name="payroi" class="java.math.BigDecimal"/>
+	<field name="maturitydate" class="java.sql.Date"/>
+	<field name="payint" class="java.math.BigDecimal"/>
+	<field name="totalpayamt" class="java.math.BigDecimal"/>
+	<field name="rediptiontype" class="java.lang.String"/>
+	<field name="ad_member_id" class="java.lang.Integer"/>
+	<field name="ad_society_no" class="java.lang.Integer"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="ad_fd_trx_id" class="java.lang.Integer"/>
+	<field name="fd_no" class="java.lang.Integer"/>
+	<field name="fd_amt" class="java.math.BigDecimal"/>
+	<field name="opening_date" class="java.sql.Date"/>
+	<field name="fd_roi_id" class="java.lang.Integer"/>
+	<field name="maturity_date" class="java.sql.Date"/>
+	<variable name="total_amt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{fd_amt}]]></variableExpression>
+	</variable>
+	<variable name="fd_amt_total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalpayamt}]]></variableExpression>
+	</variable>
+	<group name="fd_detail_opening_date">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="99" y="0" width="390" height="23"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Central Bank Employees Co.Op. Credit Society]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="23" width="302" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration No.AR/BPL/57]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="48" width="522" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="162" y="17" width="240" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Paid FD Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="4" width="139" height="16"/>
+				<textElement>
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Parameter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="20" width="50" height="16"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="35" width="50" height="16"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="460" y="39" width="62" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="431" y="39" width="30" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="52" y="20" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$P{from}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="52" y="35" width="100" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$P{to}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="27" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sno.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="0" width="45" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mem.No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="0" width="110" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="40" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FD No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="0" width="55" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Op.Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="0" width="55" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pay. Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mat. Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FD Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="0" width="40" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{sno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="45" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ad_society_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="110" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="0" width="40" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{fd_no}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="277" y="0" width="55" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{maturity_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="332" y="0" width="40" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{payint}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fd_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalpayamt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{rediptiontype}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="222" y="0" width="55" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{opening_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="400" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="480" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="373" y="0" width="42" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="416" y="0" width="55" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{total_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="0" width="51" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{fd_amt_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

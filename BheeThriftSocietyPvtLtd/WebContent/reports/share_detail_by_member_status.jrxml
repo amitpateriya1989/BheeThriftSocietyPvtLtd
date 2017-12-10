@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="share_day_book" language="groovy" pageWidth="595" pageHeight="842" columnWidth="505" leftMargin="54" rightMargin="36" topMargin="36" bottomMargin="72" uuid="db51368b-226d-4ee4-9b0c-9502b66f26a8">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="44"/>
+	<property name="ireport.y" value="288"/>
+	<parameter name="fdate" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tdate" class="java.sql.Timestamp">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ad_member_status_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     row_number()over() AS sno,
+     share_detail."ad_member_share_id" AS share_detail_ad_member_share_id,
+     share_detail."ad_society_no" AS share_detail_ad_society_no,
+     share_detail."name" AS share_detail_name,
+     share_detail."date_of_allocation" AS share_detail_date_of_allocation,
+     share_detail."share_trx_by" AS share_detail_share_trx_by,
+     share_detail."share_amt" AS share_detail_share_amt,
+     share_detail."qnt_of_share" AS share_detail_qnt_of_share,
+     share_detail."share_no_form" AS share_detail_share_no_form,
+     share_detail."share_no_to" AS share_detail_share_no_to,
+     share_detail."batch_no" AS share_detail_batch_no,
+     ad_member_status."ad_member_status_id" AS ad_member_status_ad_member_status_id,
+     ad_member_status."member_status" AS ad_member_status_member_status
+FROM
+     "public"."ad_member_status" ad_member_status
+     LEFT JOIN "public"."share_detail" share_detail ON ad_member_status."ad_member_status_id" = share_detail."ad_member_status_id"
+where  ad_member_status."ad_member_status_id"=$P{ad_member_status_id} AND date_of_allocation between $P{fdate} AND $P{tdate}]]>
+	</queryString>
+	<field name="sno" class="java.lang.Long"/>
+	<field name="share_detail_ad_member_share_id" class="java.lang.Integer"/>
+	<field name="share_detail_ad_society_no" class="java.lang.Integer"/>
+	<field name="share_detail_name" class="java.lang.String"/>
+	<field name="share_detail_date_of_allocation" class="java.sql.Date"/>
+	<field name="share_detail_share_trx_by" class="java.lang.String"/>
+	<field name="share_detail_share_amt" class="java.math.BigDecimal"/>
+	<field name="share_detail_qnt_of_share" class="java.lang.Integer"/>
+	<field name="share_detail_share_no_form" class="java.lang.Integer"/>
+	<field name="share_detail_share_no_to" class="java.lang.Integer"/>
+	<field name="share_detail_batch_no" class="java.lang.Integer"/>
+	<field name="ad_member_status_ad_member_status_id" class="java.lang.Integer"/>
+	<field name="ad_member_status_member_status" class="java.lang.String"/>
+	<variable name="tot_amt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{share_detail_share_amt}]]></variableExpression>
+	</variable>
+	<variable name="tot_share" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{share_detail_qnt_of_share}]]></variableExpression>
+	</variable>
+	<group name="ad_member_share_date_of_allocation">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="197fef8d-2a4c-4ef2-a554-e16144008bb4" x="122" y="0" width="390" height="23"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Central Bank Employees Co.Op. Credit Society]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="352cc75c-b6ba-4f1c-847d-f31c893993bc" x="153" y="24" width="302" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration No.AR/BPL/57]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="90bfb594-0315-4514-a6d4-4710e34b8e3f" x="0" y="46" width="505" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="99fee6ba-a307-40a0-97f1-38d3b6caaf32" x="0" y="0" width="64" height="14"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parameter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da7be92e-e481-47f6-b172-409e3da731fa" x="200" y="8" width="137" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Share Detail]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0085bed2-0885-44a4-abca-c8c9e21723d7" x="435" y="21" width="70" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="adcac155-c512-458e-93ed-21db892f6d1c" x="0" y="13" width="81" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Member Status :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8c76c81-be00-4cdb-8101-dae71428453a" x="80" y="13" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ad_member_status_member_status}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9bd1470a-4a4a-4797-9a79-7446180edad9" x="0" y="26" width="81" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="424f0445-f82f-4068-a9d5-b748d48bd202" x="0" y="40" width="81" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="a262bdcd-f1ed-40b7-8c33-dd642f84fb35" x="80" y="27" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fdate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="25efdc77-c7c1-4d5f-acff-c3aee51bf2c3" x="80" y="39" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d09acc09-4383-4e45-ab24-3904a32c89f2" x="81" y="0" width="118" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5eb4c84f-c05d-4a1b-be3e-20e922701c34" x="36" y="0" width="45" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mem. No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="87217b4e-9f91-4348-b66c-447a3521341e" x="199" y="0" width="50" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec7f8971-53c0-4fd6-b909-1a99b2ec128d" x="249" y="0" width="43" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="172110ed-5de0-4381-8bf3-db4f47e09558" x="292" y="0" width="45" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Batch No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="49fb464b-e20c-4c7e-a172-e00ffac4687d" x="337" y="0" width="50" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f456f8b3-5cb3-49c1-975a-8bb9512991c2" x="387" y="0" width="48" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4c5e1853-7045-47e8-bd91-1b23e7b58791" x="435" y="0" width="70" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="201c7ead-0097-40fe-9720-1b572d263604" x="0" y="0" width="36" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sno]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="36a7e99a-1247-460e-a3c0-f455e174bea1" x="0" y="0" width="36" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3a5593ab-943f-4a23-9996-ad55e44bda57" x="36" y="0" width="45" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_ad_society_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="46d54646-7d33-453c-b0e5-1e08689031bb" x="81" y="0" width="118" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3bef5a89-7ea1-4d5f-b935-591a6338207c" x="435" y="0" width="70" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_share_amt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="dd1e62b3-e9a3-4a1d-8402-fa792786a150" x="249" y="0" width="43" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_qnt_of_share}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c48b8d67-3f0a-4acd-979c-1b0720db6ed3" x="292" y="0" width="45" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_batch_no}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="576aa540-62c5-428b-b165-f3095d530aa1" x="337" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_share_no_form}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="13c7f699-1b57-4c2f-899d-6b96566a5a75" x="387" y="0" width="48" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_share_no_to}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="a5bfe5f0-a30a-4b77-a028-47a78ad9a1fc" x="199" y="0" width="50" height="14"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{share_detail_date_of_allocation}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cefd10cf-0333-4433-9e30-2f3976bdd8ab" x="387" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="e489a666-2275-4b95-80b0-50aa752c4be4" x="467" y="0" width="31" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="02fd2ecb-806b-45f4-9cae-29255254d586" x="213" y="0" width="36" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8120dea7-c083-4268-a8be-1e11a73efdfc" x="435" y="0" width="70" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_amt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7d291b30-f70d-4498-9c37-7ab2b4f29a10" x="249" y="0" width="43" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_share}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="final_payment_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58fe92c2-1866-4fc0-9baa-b1f3e13a1050">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fdate" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     row_number()over() AS sno,
+     ad_final_pay."ad_final_pay_id" AS ad_final_pay_ad_final_pay_id,
+     ad_final_pay."fdgs_amt" AS ad_final_pay_fdgs_amt,
+     ad_final_pay."int_fdgs" AS ad_final_pay_int_fdgs,
+  ad_final_pay."fdgs_amt"+ ad_final_pay."int_fdgs" AS fgds_total,
+
+     ad_final_pay."share_amt" AS ad_final_pay_share_amt,
+     ad_final_pay."loan_amt" AS ad_final_pay_loan_amt,
+     ad_final_pay."int_loan" AS ad_final_pay_int_loan,
+  ad_final_pay."loan_amt" + ad_final_pay."int_loan" AS loan_bal,
+  ad_final_pay."fdgs_amt"+ ad_final_pay."int_fdgs" + ad_final_pay."share_amt" AS tot_amt,
+
+     ad_final_pay."compensation_amt" AS ad_final_pay_compensation_amt,
+     ad_final_pay."reson" AS ad_final_pay_reson,
+     ad_final_pay."reson_date" AS ad_final_pay_reson_date,
+     ad_final_pay."final_pay_date" AS ad_final_pay_final_pay_date,
+     ad_member."ad_member_id" AS ad_member_ad_member_id,
+     ad_voucher."status" AS ad_voucher_status,
+     ad_voucher."instrument_no" AS ad_voucher_instrument_no,
+     ad_voucher."instrument_date" AS ad_voucher_instrument_date,
+     ad_voucher."voucher_type" AS ad_voucher_voucher_type,
+     ad_member."name" AS ad_member_name,
+     ad_member_status."member_status" AS ad_member_status_member_status,
+     ad_member."ad_society_no" AS ad_member_ad_society_no
+FROM
+     "public"."ad_member" ad_member INNER JOIN "public"."ad_final_pay" ad_final_pay ON ad_member."ad_member_id" = ad_final_pay."ad_member_id"
+     INNER JOIN "public"."ad_voucher" ad_voucher ON ad_final_pay."ad_voucher_id" = ad_voucher."ad_voucher_id" AND   ad_voucher."status" ='Approved'
+     INNER JOIN "public"."ad_member_status" ad_member_status ON ad_member."ad_member_status_id" = ad_member_status."ad_member_status_id"
+WHERE
+     ad_member_status."member_status" = 'Active'
+ AND ad_final_pay."final_pay_date" = $P{fdate}]]>
+	</queryString>
+	<field name="sno" class="java.lang.Long"/>
+	<field name="ad_final_pay_ad_final_pay_id" class="java.lang.Integer"/>
+	<field name="ad_final_pay_fdgs_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_int_fdgs" class="java.math.BigDecimal"/>
+	<field name="fgds_total" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_share_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_loan_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_int_loan" class="java.math.BigDecimal"/>
+	<field name="loan_bal" class="java.math.BigDecimal"/>
+	<field name="tot_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_compensation_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_reson" class="java.lang.String"/>
+	<field name="ad_final_pay_reson_date" class="java.lang.String"/>
+	<field name="ad_final_pay_final_pay_date" class="java.lang.String"/>
+	<field name="ad_member_ad_member_id" class="java.lang.Integer"/>
+	<field name="ad_voucher_status" class="java.lang.String"/>
+	<field name="ad_voucher_instrument_no" class="java.lang.String"/>
+	<field name="ad_voucher_instrument_date" class="java.lang.String"/>
+	<field name="ad_voucher_voucher_type" class="java.lang.String"/>
+	<field name="ad_member_name" class="java.lang.String"/>
+	<field name="ad_member_status_member_status" class="java.lang.String"/>
+	<field name="ad_member_ad_society_no" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2e1eb8f4-678f-431f-b804-4027c8e24c51" x="173" y="25" width="302" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration No.AR/BPL/57]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09eb26a8-89f6-4de9-9b3c-c22b3ec50293" x="142" y="1" width="390" height="23"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Central Bank Employees Co.Op. Credit Society]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d9304969-03af-4272-a2ba-1c1f57a93547" x="252" y="0" width="149" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Final Payment Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6d669ce8-cf28-4b7b-9965-d4355e4a12f8" x="0" y="0" width="100" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parameter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="03d0e831-edbe-400a-8e1b-3582378d0bf1" x="0" y="15" width="39" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="043bd033-5652-427d-8b04-68b00632ffdd" x="493" y="11" width="62" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9527b9fd-0575-40ef-af07-92cd337abce4" x="38" y="15" width="76" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="10000770-a1f3-47f5-9069-58c90aae176e" x="0" y="0" width="26" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7db500e5-6b96-4076-83b8-64696e020174" x="26" y="0" width="50" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a07e1bc9-6bbe-4305-8bec-e49990041525" x="76" y="0" width="87" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5b77ee00-3ce3-4d1b-85a9-414a0a3d3001" x="163" y="0" width="44" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dc933b6d-874a-4230-af47-ce277582c60e" x="290" y="0" width="68" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PayDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9dbb37d6-585b-44b7-b543-33a587898f1f" x="358" y="0" width="76" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="11b3da44-2e06-48e4-aea0-00ed6253657b" x="207" y="0" width="40" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reason]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="181dbb4b-b021-415e-aca7-ed9f9fe44966" x="247" y="0" width="43" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chq.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72a4a389-34ea-4c98-91a4-3e79fc21d7a8" x="434" y="0" width="119" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ef2844c3-e5e0-4eb5-82c0-a07acf4cb442" x="0" y="0" width="27" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{sno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="135bc15c-0e94-4b9e-9406-498568213c4e" x="26" y="0" width="51" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ad_member_ad_society_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="001220f5-43dc-4dd9-a995-e7d6252fc781" x="76" y="0" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ad_member_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e1e83021-8824-49ee-a525-125c2c74daff" x="162" y="0" width="46" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ad_member_status_member_status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8c5499c-d642-4952-9699-91c90ea57be5" x="290" y="0" width="68" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ad_final_pay_final_pay_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0773ae26-257c-4923-99d5-0ec3f76877f9" x="358" y="0" width="76" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{tot_amt}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="08a74798-9b8b-4d19-9245-4cda1f3165f5" x="0" y="21" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ef9e7dea-e442-4f1c-af1d-a0be34bd6f9f" x="207" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ad_final_pay_reson}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9dae07f2-4ce7-45e3-8a00-5fef7e578d22" x="246" y="0" width="45" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ad_voucher_instrument_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement uuid="17b77493-d0b5-4bdd-9828-f854f550c097" x="433" y="0" width="80" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="7d12d3c7-fd70-4c0d-85ee-0329dd8a4841" x="513" y="0" width="40" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

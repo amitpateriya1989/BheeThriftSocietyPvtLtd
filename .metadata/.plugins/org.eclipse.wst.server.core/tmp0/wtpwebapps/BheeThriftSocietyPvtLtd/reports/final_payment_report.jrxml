@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="final_payment_report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fdate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     row_number()over() AS sno,
+     ad_final_pay."ad_final_pay_id" AS ad_final_pay_ad_final_pay_id,
+     ad_final_pay."fdgs_amt" AS ad_final_pay_fdgs_amt,
+     ad_final_pay."int_fdgs" AS ad_final_pay_int_fdgs,
+  ad_final_pay."fdgs_amt"+ ad_final_pay."int_fdgs" AS fgds_total,
+
+     ad_final_pay."share_amt" AS ad_final_pay_share_amt,
+     ad_final_pay."loan_amt" AS ad_final_pay_loan_amt,
+     ad_final_pay."int_loan" AS ad_final_pay_int_loan,
+  ad_final_pay."loan_amt" + ad_final_pay."int_loan" AS loan_bal,
+  ad_final_pay."fdgs_amt"+ ad_final_pay."int_fdgs" + ad_final_pay."share_amt" AS tot_amt,
+
+     ad_final_pay."compensation_amt" AS ad_final_pay_compensation_amt,
+     ad_final_pay."reson" AS ad_final_pay_reson,
+     ad_final_pay."reson_date" AS ad_final_pay_reson_date,
+     ad_final_pay."final_pay_date" AS ad_final_pay_final_pay_date,
+     ad_member."ad_member_id" AS ad_member_ad_member_id,
+     ad_voucher."status" AS ad_voucher_status,
+     ad_voucher."instrument_no" AS ad_voucher_instrument_no,
+     ad_voucher."instrument_date" AS ad_voucher_instrument_date,
+     ad_voucher."voucher_type" AS ad_voucher_voucher_type,
+     ad_member."name" AS ad_member_name,
+     ad_member_status."member_status" AS ad_member_status_member_status,
+     ad_member."ad_society_no" AS ad_member_ad_society_no
+FROM
+     "public"."ad_final_pay" ad_final_pay
+
+     LEFT JOIN "public"."ad_member" ad_member ON ad_final_pay."ad_member_id"=ad_member."ad_member_id"
+     LEFT JOIN "public"."ad_voucher" ad_voucher ON ad_final_pay."ad_voucher_id" = ad_voucher."ad_voucher_id" AND   ad_voucher."status" ='Approved'
+     LEFT JOIN "public"."ad_member_status" ad_member_status ON ad_member."ad_member_status_id" = ad_member_status."ad_member_status_id"
+WHERE
+     ad_member_status."member_status" = 'Active'
+ AND ad_final_pay."final_pay_date" = $P{fdate}]]>
+	</queryString>
+	<field name="sno" class="java.lang.Long"/>
+	<field name="ad_final_pay_ad_final_pay_id" class="java.lang.Integer"/>
+	<field name="ad_final_pay_fdgs_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_int_fdgs" class="java.math.BigDecimal"/>
+	<field name="fgds_total" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_share_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_loan_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_int_loan" class="java.math.BigDecimal"/>
+	<field name="loan_bal" class="java.math.BigDecimal"/>
+	<field name="tot_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_compensation_amt" class="java.math.BigDecimal"/>
+	<field name="ad_final_pay_reson" class="java.lang.String"/>
+	<field name="ad_final_pay_reson_date" class="java.lang.String"/>
+	<field name="ad_final_pay_final_pay_date" class="java.lang.String"/>
+	<field name="ad_member_ad_member_id" class="java.lang.Integer"/>
+	<field name="ad_voucher_status" class="java.lang.String"/>
+	<field name="ad_voucher_instrument_no" class="java.lang.String"/>
+	<field name="ad_voucher_instrument_date" class="java.sql.Timestamp"/>
+	<field name="ad_voucher_voucher_type" class="java.lang.String"/>
+	<field name="ad_member_name" class="java.lang.String"/>
+	<field name="ad_member_status_member_status" class="java.lang.String"/>
+	<field name="ad_member_ad_society_no" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="173" y="25" width="302" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registration No.AR/BPL/57]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="1" width="390" height="23"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Central Bank Employees Co.Op. Credit Society]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="252" y="0" width="149" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Final Payment Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parameter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="39" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="493" y="11" width="62" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="15" width="76" height="16"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="26" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="0" width="50" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="0" width="87" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="0" width="44" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="0" width="59" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PayDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="71" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FGDS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="0" width="65" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Share Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="0" width="77" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Loan Bal.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="0" width="76" height="16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amt]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{sno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="0" width="51" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{ad_member_ad_society_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="0" width="87" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ad_member_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="46" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ad_member_status_member_status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="0" width="60" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ad_final_pay_final_pay_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="266" y="0" width="72" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fgds_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="0" width="66" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ad_final_pay_share_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="0" width="78" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{loan_bal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="0" width="76" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tot_amt}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="17" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="3" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="16"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="40" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

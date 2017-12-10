@@ -1,0 +1,225 @@
+<script src="js/jquery-1.8.3.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(e){
+	$(".charecter").keypress(function(e){
+		
+		var regex = new RegExp("^[a-zA-Z. ]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+        e.preventDefault();
+        alert('Please Enter Alphabate and .');
+        return false;
+        }
+	});
+$(".alpha").keypress(function(e){
+		
+		var regex = new RegExp("^[a-zA-Z ]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+        e.preventDefault();
+        alert('Please Enter Alphabate');
+        return false;
+        }
+	});
+$(".alphanumeric").keypress(function(e){
+	
+	var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+    else
+    {
+    e.preventDefault();
+    alert('Please Enter Alphabate And Number');
+    return false;
+    }
+});
+	$(".zipcode").keypress(function(e){		
+		 var zip = $(this).val();
+		 if ((zip.length)>5){
+			 e.preventDefault();
+		     alert("zipcode should only be 6 digits");
+		     return false;
+		}	
+		 var regex = new RegExp("^[0-9]+$");
+	     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter number');
+	     return false;
+	     }	
+	});
+	$(".number").keypress(function(e){
+		 var regex = new RegExp("^[0-9]+$");
+	     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter number');
+	     return false;
+	     }
+	});
+	$(".amt").keypress(function(e){
+		 var regex = new RegExp("^[0-9.]+$");
+	     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter number');
+	     return false;
+	     }
+	});
+	$(".amt").focusout(function(e){
+		 var regex = /^\d+(\.\d{1,2})?$/;
+	     var str = $(".amt").val();
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter Amount');
+	     return false;
+	     }
+	});
+$(".address").keypress(function(e){
+		
+		var regex = new RegExp("^[a-zA-Z. 0-9/()]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+        e.preventDefault();
+        alert('Please Enter Alphabate');
+        return false;
+        }
+	});
+$(".panno").keypress(function(e){
+	
+	var regex = new RegExp("^[A-Z0-9]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+    else
+    {
+    e.preventDefault();
+    alert('Please Enter Number And Capital Latter Only');
+    return false;
+    }
+});
+$(".panno").focusout(function(e){
+	
+	var regex = /^[A-Z0-9]{10}$/;
+    var str = $(".panno").val();
+    if (regex.test(str)) {
+        return true;
+    }
+    else
+    {
+    e.preventDefault();
+    alert('Please Enter Correct Pan No');
+    return false;
+    }
+});
+	$(".ifsc").focusout(function(e){
+		 var regex = /[A-Z|a-z]{4}[0][\d]{6}$/;
+	     var str = $(".ifsc").val();
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     $(".ifsc").val('');
+	     alert('Please Enter correct ifsc ');
+	     return false;
+	     }
+	});
+	$(".addharno").focusout(function(e){
+		 var regex = /^\d{4}\s\d{4}\s\d{4}$/;
+	     var str = $(".addharno").val();
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     $(".addharno").val('');
+	     alert('Please Enter correct Addhar No ');
+	     return false;
+	     }
+	});
+	
+	
+	$(".email").focusout(function(e){
+		
+		 var regex =/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+	     var str = $(".email").val();
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter correct email ');
+	     $(".email").val('');
+	     return false;
+	     }
+		//
+	});
+$(".phone").keypress(function(e){
+		
+		var regex = new RegExp("^[0-9]+$");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else
+        {
+        e.preventDefault();
+        alert('Please Enter Number');
+        return false;
+        }
+	});
+	
+	$(".phone").focusout(function(e){
+		///^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+		 var regex =/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
+	     var str = $(".phone").val();
+	     if (regex.test(str)) {
+	         return true;
+	     }
+	     else
+	     {
+	     e.preventDefault();
+	     alert('Please Enter correct phone No ');
+	     $(".phone").val('');
+	     return false;
+	     }
+	})
+	
+});
+
+</script>

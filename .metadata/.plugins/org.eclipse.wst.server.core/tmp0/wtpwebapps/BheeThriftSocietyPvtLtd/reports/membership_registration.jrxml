@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="membership_registration" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     personal_detail_bkt."personal_detail_bkt_id" AS personal_detail_bkt_personal_detail_bkt_id,
+     personal_detail_bkt."staff_no" AS personal_detail_bkt_staff_no,
+     personal_detail_bkt."full_name" AS personal_detail_bkt_full_name,
+     personal_detail_bkt."father_name" AS personal_detail_bkt_father_name,
+     personal_detail_bkt."current_add" AS personal_detail_bkt_current_add,
+     personal_detail_bkt."beneficiary_name" AS personal_detail_bkt_beneficiary_name,
+     personal_detail_bkt."relation" AS personal_detail_bkt_relation,
+     personal_detail_bkt."date_of_membership" AS personal_detail_bkt_date_of_membership,
+     personal_detail_bkt."relation_nominee" AS personal_detail_bkt_relation_nominee,
+     personal_detail_bkt."register_now" AS personal_detail_bkt_register_now,
+     personal_detail_bkt."membership_no" AS personal_detail_bkt_membership_no,
+     personal_detail_bkt."isactive" AS personal_detail_bkt_isactive
+
+FROM
+     "adempiere"."personal_detail_bkt" personal_detail_bkt]]>
+	</queryString>
+	<field name="personal_detail_bkt_personal_detail_bkt_id" class="java.math.BigDecimal"/>
+	<field name="personal_detail_bkt_staff_no" class="java.lang.String"/>
+	<field name="personal_detail_bkt_full_name" class="java.lang.String"/>
+	<field name="personal_detail_bkt_father_name" class="java.lang.String"/>
+	<field name="personal_detail_bkt_current_add" class="java.lang.String"/>
+	<field name="personal_detail_bkt_beneficiary_name" class="java.lang.String"/>
+	<field name="personal_detail_bkt_relation" class="java.lang.String"/>
+	<field name="personal_detail_bkt_date_of_membership" class="java.sql.Timestamp"/>
+	<field name="personal_detail_bkt_relation_nominee" class="java.lang.String"/>
+	<field name="personal_detail_bkt_register_now" class="java.lang.String"/>
+	<field name="personal_detail_bkt_membership_no" class="java.lang.String"/>
+	<field name="personal_detail_bkt_isactive" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="94" y="0" width="490" height="31"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BHEE Thrift & Credit Co.Op. Society Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="31" width="490" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bachat Bhawan, Piplani, BHEL, Bhopal (M.P.)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="152" y="0" width="357" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Membership Registration Sheet]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="680" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[DOJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="52" height="20"/>
+				<textElement/>
+				<text><![CDATA[Staff No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="0" width="141" height="20"/>
+				<textElement/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="243" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nominee Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="0" width="79" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="87" height="20"/>
+				<textElement/>
+				<text><![CDATA[Witness 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="509" y="0" width="75" height="20"/>
+				<textElement/>
+				<text><![CDATA[Witness 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="0" width="64" height="20"/>
+				<textElement/>
+				<text><![CDATA[DOC A/C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="0" width="74" height="20"/>
+				<textElement/>
+				<text><![CDATA[Reason]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="722" y="0" width="80" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sign]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{personal_detail_bkt_date_of_membership}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personal_detail_bkt_staff_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="0" width="141" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personal_detail_bkt_full_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="20" width="122" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personal_detail_bkt_full_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="102" y="20" width="19" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/O]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="243" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personal_detail_bkt_beneficiary_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{personal_detail_bkt_relation_nominee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="0" width="79" height="40"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="20" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="20" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="722" y="0" width="80" height="40"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
